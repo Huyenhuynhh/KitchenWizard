@@ -2,9 +2,12 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.contrib.auth import get_user_model, authenticate, login
+
+from api.models import Recipe
 from .serializers import UserSerializer
 from .api_utils import get_recipes
 from django.contrib.auth import login
+from django.http import JsonResponse
 
 User = get_user_model()
 
@@ -42,4 +45,23 @@ class RecipeViewSet(viewsets.ViewSet):
     def search(self, request):
         ingredients = request.query_params.get('ingredients', '')
         recipes = get_recipes(ingredients)
+        for recipe in recipes:
+            # If the recipe doesn't exist in the database, create it
+            if not Recipe.objects.filter(spoonacular_id=recipe['id']).exists():
+                # Combine all the ingredients into a single string
+                ingredients_list = []
+                for ingredient in recipe.get('usedIngredients', []):
+                    ingredients_list.append(ingredient.get('original', ''))
+                for ingredient in recipe.get('missedIngredients', []):
+                    ingredients_list.append(ingredient.get('original',''))
+                ingredients_str = ", ".join(ingredients_list)
+
+                Recipe.objects.create(
+                    title=recipe['title'],
+                    image_url=recipe['image'],
+                    source_url=recipe.get('sourceUrl', ''),  # replaced 'sourceUrl' with get method
+                    spoonacular_id=recipe['id'],
+                    ingredients=ingredients_str,
+                    instructions="" 
+                )
         return Response(recipes)

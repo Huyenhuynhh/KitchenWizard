@@ -1,5 +1,5 @@
-# interact with Spoonacular API 
 import requests
+
 
 def get_recipes(ingredients):
     url = "https://api.spoonacular.com/recipes/complexSearch"
@@ -13,14 +13,17 @@ def get_recipes(ingredients):
 
     # send GET request to Spoonacular 
     response = requests.get(url, params=query_params)
+    data = response.json()
 
     # status code = 200 if the request was successful
     if response.status_code == 200:
-        # parse response as JSON
-        recipes = response.json()
-        return recipes["results"]
+        if "results" in data and data["results"]:
+            print(data["results"][0])  # print first recipe
+            return data["results"]
+        else:
+            print(f"No recipes found for ingredients: {ingredients}")
+            return []
     else:
-        # print stutus code and empty list if not successful 
+        # print status code and empty list if not successful 
         print(f"Failed to get recipes: {response.status_code}")
         return []
-    
