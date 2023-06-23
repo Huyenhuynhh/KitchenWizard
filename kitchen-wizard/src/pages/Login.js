@@ -7,16 +7,13 @@ import image from "../components/assets/background1.png";
 
 const Button = styled.button`
   height: 56px;
-  width: 170px;
-  left: 671px;
-  top: 702px;
-  position: absolute;
+  width: 130px;
+  margin-left: 180px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 10 px 50 px;
-  gap: 10 px;
+  padding: 10px 50px;
   background: #000;
   color: #fff;
   border-radius: 3px;
@@ -34,11 +31,10 @@ const Button = styled.button`
 
 const LoginPageContainer = styled.div`
   display: flex;
-  position: absolute;
   justify-content: center;
   align-items: center;
-  height: 982px;
-  width: 1512px;
+  height: 100vh;
+  width: 100vw;
   background-color: #ffffffb2;
 `;
 
@@ -48,15 +44,15 @@ const BackButton = styled.img`
   left: 3%;
   top: 8%;
   width: 35px;
-  height: auto
+  height: auto;
 `;
 
 const FormContainer = styled.div`
   background: rgba(255, 255, 255, 0.7);
   padding: 50px;
   border-radius: 4px;
-  width: 517px;
-  max-width: 60%;
+  width: 80%;
+  max-width: 600px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -70,7 +66,6 @@ const Input = styled.input`
   border: 1px solid #ddd;
   padding: 5px 10px;
   box-sizing: border-box;
-  border: none;
 `;
 
 const Label = styled.label`
@@ -80,15 +75,14 @@ const Label = styled.label`
   color: #000000;
 `;
 
-
 const LoginPageBackground = styled.div`
   background-image: url(${image});
   background-position: center;
   background-repeat: no-repeat;
   background-position: 70%;
   background-size: cover;
-  height: 982px;
-  width: 1512px;
+  height: 100vh;
+  width: 100vw;
   position: relative;
 `;
 
@@ -98,11 +92,7 @@ const LoginPage = () => {
   const handleLogin = (event) => {
     event.preventDefault();
   };
-  const handleRegisterClick = () => {
-        navigate("/register");
-  };
 
- 
   return (
     <LoginPageBackground>
       <LoginPageContainer>
@@ -136,7 +126,6 @@ const LoginPage = () => {
             >
               Register
             </a>
-            <Button onClick={handleRegisterClick}>Register</Button>
             <Button type="submit">Login</Button>
           </form>
         </FormContainer>

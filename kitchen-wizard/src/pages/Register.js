@@ -8,10 +8,7 @@ import image from "../components/assets/background1.png";
 const RegisterButton = styled.button`
   height: 56px;
   width: 170px;
-  left: 645px;
-  top: 652px;
-  position: absolute;
-  display: flex;
+  margin-left: 115px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -82,7 +79,7 @@ const BackButton = styled.img`
   content: url(${backButtonImage});
   position: absolute;
   left: 3%;
-  top: 10%;
+  top: 8%;
   width: 35px;
   height: auto;
 `;
@@ -93,16 +90,47 @@ const RegisterPageBackground = styled.div`
   background-repeat: no-repeat;
   background-position: 70%;
   background-size: cover;
-  height: 982px;
-  width: 1512px;
+  height: 100vh;
+  width: 100vw;
   position: relative;
 `;
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [error, setError] = React.useState('');
 
-  const handleRegisterClick = (event) => {
-    navigate("/login")
+  const handleRegisterClick = async (event) => {
+    event.preventDefault();
+
+    if (password !== confirmPassword){
+      setError("Passwords don't match");
+      return;
+    }
+
+    const response = await fetch("http://localhost:8000/accounts/accounts/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        email: email,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.response) {
+      // successfully registered
+      navigate("/login");
+    } else {
+      setError(data.error);
+    }
   };
 
   return (
@@ -124,25 +152,42 @@ const RegisterPage = () => {
             </h2>
             <LabelInputWrapper>
               <Label>Email</Label>
-              <Input type="email" />
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </LabelInputWrapper>
 
             <LabelInputWrapper>
               <Label>Username</Label>
-              <Input type="text" />
+              <Input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </LabelInputWrapper>
 
             <LabelInputWrapper>
               <Label>Password</Label>
-              <Input type="password" />
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </LabelInputWrapper>
 
             <LabelInputWrapper>
-              <Label>Confirm Password</Label>
-              <Input type="password" />
+              <Label>Confirm password</Label>
+              <Input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             </LabelInputWrapper>
 
-            <RegisterButton onClick={handleRegisterClick}>Register</RegisterButton>
+            {error && <p>{error}</p>}
+
             <RegisterButton type="submit">Register</RegisterButton>
           </form>
         </FormContainer>

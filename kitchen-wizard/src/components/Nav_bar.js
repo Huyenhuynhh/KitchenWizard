@@ -4,7 +4,7 @@ import Logo from "./Logo";
 
 const Navbar = styled.div`
   position: absolute;
-  width: 1512px;
+  width: 100%;
   height: 66px;
   left: 0px;
   top: 0px;
@@ -15,11 +15,8 @@ const Navbar = styled.div`
 `;
 
 const AppName = styled.h1`
-  position: absolute;
-  width: 193px;
-  height: 36px;
-  left: 96px;
-  top: 15px;
+  margin-left: 80px;
+  margin-top: 13px;
   font-family: "Caesar Dressing";
   font-style: normal;
   font-weight: 400;
