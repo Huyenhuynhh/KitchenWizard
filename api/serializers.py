@@ -6,5 +6,5 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
-        extra_kwargs = {'password' : {'write_only' : True}} # prevent password from being exposed when retrieving user data
+        fields = ('id', 'username', 'email', 'password')
+    
