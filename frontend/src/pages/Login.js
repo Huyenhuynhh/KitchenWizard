@@ -43,7 +43,7 @@ const BackButton = styled.img`
   content: url(${backButtonImage});
   position: absolute;
   left: 3%;
-  top: 8%;
+  top: 10%;
   width: 35px;
   height: auto;
 `;
