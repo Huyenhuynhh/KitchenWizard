@@ -155,26 +155,25 @@ const SearchButton = styled.img`
   margin-top: -45px;
   margin-left: 800px;
 `;
-
-// const [recipes, setRecipes] = useState([]);
+  
 const Search = () => {
-  const [input, setInput] = useState("");
+  const [ingredient, setIngredient] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
-    setInput(event.target.value);
+    setIngredient(event.target.value);
   };
 
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${input}&apiKey=72997388098246b19ba31673ac715fb9`);
-
-      localStorage.setItem("recipeData", JSON.stringify(response.data.results));
+        `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredient}&number=20&apiKey=72997388098246b19ba31673ac715fb9`
+      );
+      localStorage.setItem("recipeData", JSON.stringify(response.data));
+      localStorage.setItem("ingredient", ingredient);
       navigate("/results");
-      console.log("Received result", response.data);
     } catch (error) {
-      console.error("Somehting went wrong!");
+      console.error("Something went wrong!");
     }
   };
 
