@@ -1,10 +1,16 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from .models import User, Recipe
 
-User = get_user_model()
+
+class RecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = ['id', 'title', 'source_url', 'ingredients', 'instruction']
 
 class UserSerializer(serializers.ModelSerializer):
+    saved_recipes = RecipeSerializer(many=True, read_only=True)
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ['id', 'username', 'email', 'password', 'saved_recipes']
     

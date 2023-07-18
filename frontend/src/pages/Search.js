@@ -45,10 +45,20 @@ const Navigation = styled.div`
 `;
 
 const NavItem = styled.div`
+  position: absolute;
   color: white;
   font-size: 25px;
   font-family: "Poppins";
   font-weight: 300;
+  word-wrap: break-word;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #ffd700;
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const LogoutButton = styled.div`
@@ -70,6 +80,7 @@ const LogoutButton = styled.div`
   &:hover {
     background: #a19f9f;
     color: #000000;
+    cursor: pointer;
   }
 `;
 
@@ -154,6 +165,7 @@ const SearchButton = styled.img`
   position: relative;
   margin-top: -45px;
   margin-left: 800px;
+  cursor: pointer;
 `;
   
 const Search = () => {
@@ -192,34 +204,8 @@ const Search = () => {
         <Logo img src={logo} alt="Logo" />
         <Title>Kitchen Wizard</Title>
         <Navigation>
-          <NavItem
-            style={{
-              left: 360,
-              top: 14,
-              position: "absolute",
-              color: "white",
-              fontSize: 25,
-              fontFamily: "Poppins",
-              fontWeight: "300",
-              wordWrap: "break-word",
-            }}
-          >
-            Profile
-          </NavItem>
-          <NavItem
-            style={{
-              left: 478,
-              top: 13,
-              position: "absolute",
-              color: "white",
-              fontSize: 25,
-              fontFamily: "Poppins",
-              fontWeight: "300",
-              wordWrap: "break-word",
-            }}
-          >
-            Saved
-          </NavItem>
+          <NavItem style={{ left: 360, top: 14 }}>Profile</NavItem>
+          <NavItem style={{ left: 478, top: 13 }}>Saved</NavItem>
           <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
         </Navigation>
       </Header>

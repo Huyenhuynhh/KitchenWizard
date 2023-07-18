@@ -1,5 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { GlobalContext } from "../contexts/GlobalContext"; 
+import { UserContext } from "../contexts/UserContext";
 import styled from "styled-components";
 
 const RecipeCard = styled.div`
@@ -14,7 +16,7 @@ const RecipeCard = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   gap: 27px;
-  margin: 30px; // add some margin to space the cards apart
+  margin: 25px; // add some margin to space the cards apart
   overflow: hidden; // add overflow hidden to prevent children from overflowing
   box-sizing: border-box; // include padding in width and height
 
@@ -32,9 +34,8 @@ const LikeButton = styled.button`
   height: 40px;
   border-radius: 20%;
   transition: background 0.15s ease-in-out;
-  &:focus {
-    outline: none;
-  }
+  background-color: ${(props) => (props.isliked ? "#ef4444" : "#ffffff")};
+  color: ${(props) => (props.isliked ? "#ffffff" : "#626262")};
 
   svg {
     width: 16px;
@@ -42,27 +43,19 @@ const LikeButton = styled.button`
     fill: currentColor;
   }
 
-  ${(props) =>
-    props.isliked
-      ? `
-    color: #fff;
-    background: #ef4444; 
-    &:hover {
-      background: #dc2626;
-    }
-  `
-      : `
-    color: #626262;
-    background: #ffffff;
-    &:hover {
-      background: #050505;
-    }
-  `}
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: ${(props) => (props.isliked ? "#dc2626" : "#050505")};
+  }
 `;
+
 
 const RecipeImage = styled.img`
   width: 100%;
-  height: 248px;
+  height: 70%;
   background: linear-gradient(0deg, #d9d9d9 0%, #d9d9d9 100%);
 `;
 
@@ -84,50 +77,88 @@ const RecipeInfo = styled.div`
 `;
 
 const ScrollableDiv = styled.div`
-  max-height: 300px; // Set a max height
-  overflow-y: auto; // Enable vertical scrolling
-  padding-right: 2px; // Adjust the padding as necessary
+  max-height: 300px; // max height
+  overflow-y: auto; // enable vertical scrolling
+  padding-right: 2px; 
 `;
 
 const RecipeCardComponent = ({ recipe }) => {
-    const usedIngredients = recipe.usedIngredients
-      ? recipe.usedIngredients
-          .map((ingredient) => ingredient.original)
-          .join(", ")
-      : "No used ingredients provided";
+  const usedIngredients = recipe.usedIngredients
+    ? recipe.usedIngredients.map((ingredient) => ingredient.original).join(", ")
+    : "No used ingredients provided";
 
-    const missedIngredients = recipe.missedIngredients
-      ? recipe.missedIngredients
-          .map((ingredient) => ingredient.original)
-          .join(", ")
-      : "No missed ingredients provided";
+  const missedIngredients = recipe.missedIngredients
+    ? recipe.missedIngredients
+        .map((ingredient) => ingredient.original)
+        .join(", ")
+    : "No missed ingredients provided";
 
-    const [isliked, setIsLiked] = useState(false);
+  const { savedRecipes, saveRecipe, removeRecipe } = useContext(GlobalContext);
+  const [isLiked, setIsLiked] = useState(
+    savedRecipes.some((savedRecipe) => savedRecipe.id === recipe.id)
+  );
 
-    const handleLikeClick = () => {
-      setIsLiked(!isliked);
-      // Add code to save liked recipe
-      const likedRecipes =
-        JSON.parse(localStorage.getItem("likedRecipes")) || [];
-      if (isliked) {
-        // remove recipe from likedRecipes if it's there
-        const updatedLikedRecipes = likedRecipes.filter(
-          (likedRecipe) => likedRecipe.id !== recipe.id
+  useEffect(() => {
+    setIsLiked(
+      savedRecipes.some((savedRecipe) => savedRecipe.id === recipe.id)
+    );
+  }, [savedRecipes, recipe.id]);
+
+  const { userId } = useContext(UserContext); // destructuring to get userId from the context
+  console.log("UserId at RecipeCardComponent: ", userId);
+
+ const handleLikeClick = async () => {
+
+    // handle when userId is null
+     if (!userId) {
+       console.error("No user ID available");
+       return;
+     }
+
+    try {
+      let url = `http://localhost:8000/api/users/${userId}/update_saved_recipes/`;
+      console.log(url);
+      console.log("User ID: ", userId);
+
+      if (isLiked) {
+        // if the recipe is already liked, send a request to remove it
+        const response = await axios.put(
+          url,
+          {
+            recipe_ids: [recipe.id],
+            action: "remove",
+          }
         );
-        localStorage.setItem(
-          "likedRecipes",
-          JSON.stringify(updatedLikedRecipes)
-        );
+        if (response.status === 200) {
+          // update local state
+          removeRecipe(recipe);
+        }
       } else {
-        // add recipe to likedRecipes if it's not already there
-        likedRecipes.push(recipe);
-        localStorage.setItem("likedRecipes", JSON.stringify(likedRecipes));
+        // if the recipe is not liked, send a request to save it
+        const response = await axios.put(
+          url,
+          {
+            recipe_ids: [recipe.id],
+            action: "add",
+          }
+        );
+        if (response.status === 200) {
+          // update local state
+          saveRecipe(recipe);
+        }
       }
-    };
+
+      // toggle isLiked state after successfully saving or removing recipe
+      setIsLiked((prevIsLiked) => !prevIsLiked);
+    } catch (error) {
+      // handle error
+      console.log(error);
+    }
+  };
 
   return (
     <RecipeCard>
-      <LikeButton isliked={isliked} onClick={handleLikeClick}>
+      <LikeButton isliked={isLiked} onClick={handleLikeClick}>
         <svg viewBox="0 0 20 20">
           <path
             d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
@@ -148,4 +179,3 @@ const RecipeCardComponent = ({ recipe }) => {
 };
 
 export default RecipeCardComponent;
-

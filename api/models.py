@@ -1,12 +1,15 @@
 from django.contrib.auth.hashers import make_password, check_password
 from django.db import models
+from djongo import models
 
 class User(models.Model):
     username = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    #saved recipes for each user
+    # a list of dictionaries, each dictionary contain 'id', 'title', 'image', etc
+    saved_recipes = models.JSONField()
+
 
     class Meta:
         app_label = 'api'

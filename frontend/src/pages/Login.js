@@ -1,10 +1,10 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Nav_bar";
 import backButtonImage from "../components/assets/back-button.png";
 import image from "../components/assets/background1.png";
+import { UserContext } from "../contexts/UserContext";
 
 const Button = styled.button`
   height: 56px;
@@ -92,29 +92,34 @@ const LoginPage = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = useState(null);
+  const { setUserId } = useContext(UserContext);
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/api/users/login/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      })
-    });
+
+const handleLogin = async (event) => {
+  event.preventDefault();
+  const response = await fetch("http://127.0.0.1:8000/api/users/login/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+  });
 
   const data = await response.json();
   console.log(data);
 
   if (response.ok) {
-      navigate("/search");
-    } else {
-      setError(data);
-    }
-  };
+    setUserId(data.userId);
+    localStorage.setItem("userId", data.userId);
+    navigate("/search");
+  } else {
+    setError(data);
+  }
+};
+
 
   return (
     <LoginPageBackground>
