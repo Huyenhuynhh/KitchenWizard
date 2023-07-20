@@ -2,12 +2,14 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model, authenticate, login
 
 from api.models import Recipe
 from .serializers import UserSerializer
 from .api_utils import get_recipes
 from .models import User
+
 
 User = get_user_model()
 
@@ -41,7 +43,13 @@ class UserViewSet(viewsets.ModelViewSet):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return Response({'message': 'Logged in successfully', 'userId' : user.id})
+
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+                'message': 'Logged in successfully', 'userId' : user.id
+            })
         else:
             return Response({'error': 'Invalid username or password'}, status=400)
     

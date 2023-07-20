@@ -3,6 +3,7 @@ import axios from "axios";
 import { GlobalContext } from "../contexts/GlobalContext"; 
 import { UserContext } from "../contexts/UserContext";
 import styled from "styled-components";
+import { refreshAuthToken } from "../services/refreshToken";
 
 const RecipeCard = styled.div`
   width: 308px;
@@ -120,13 +121,20 @@ const RecipeCardComponent = ({ recipe }) => {
       console.log(url);
       console.log("User ID: ", userId);
 
+      // token is stored in localStorage 
+      const token = localStorage.getItem("authToken");
+      console.log(token);
+
       if (isLiked) {
         // if the recipe is already liked, send a request to remove it
         const response = await axios.put(
-          url,
+          url, 
           {
-            recipe_ids: [recipe.id],
-            action: "remove",
+          recipe_ids: [recipe.id],
+          action: "remove",
+          },
+          {
+            headers: { Authorization: `Bearer ${token}`} // sending token
           }
         );
         if (response.status === 200) {
@@ -136,10 +144,13 @@ const RecipeCardComponent = ({ recipe }) => {
       } else {
         // if the recipe is not liked, send a request to save it
         const response = await axios.put(
-          url,
+          url, 
           {
-            recipe_ids: [recipe.id],
-            action: "add",
+          recipe_ids: [recipe.id],
+          action: "add",
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` } // sending token 
           }
         );
         if (response.status === 200) {
@@ -152,7 +163,27 @@ const RecipeCardComponent = ({ recipe }) => {
       setIsLiked((prevIsLiked) => !prevIsLiked);
     } catch (error) {
       // handle error
-      console.log(error);
+      console.error("An error occur while updating saved recipes", error);
+
+      if (error.response) {
+        console.log("Response data: ", error.response.data);
+        console.log("Response status: ", error.response.status);
+
+        if (error.response.data === 401){
+          const refreshed = await refreshAuthToken();
+          if (refreshed){
+            handleLikeClick();
+          }
+          else {
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("refreshToken");
+            window.location.href = "/login";
+          }
+        }
+      }
+      else {
+        console.log('Error', error.message);
+      }
     }
   };
 

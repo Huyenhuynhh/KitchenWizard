@@ -113,7 +113,9 @@ const handleLogin = async (event) => {
 
   if (response.ok) {
     setUserId(data.userId);
-    localStorage.setItem("userId", data.userId);
+    localStorage.setItem('userId', data.userId);
+    localStorage.setItem('authToken', data.access);
+    localStorage.setItem('refreshToken', data.refresh);
     navigate("/search");
   } else {
     setError(data);
