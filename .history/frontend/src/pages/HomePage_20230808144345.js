@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 const HomePageTitle = styled.h1`
   position: absolute;
-  width: 100vw;
-  height: 100vh;
-  left: 47%;
+  width: 145px;
+  height: 43px;
+  left: 684px;
   top: 79px;
   font-family: "Jost";
   font-style: normal;
@@ -23,8 +23,8 @@ const HomePageBody = styled.p`
   position: absolute;
   width: 788px;
   height: 125px;
-  left: 30%;
-  top: 55%;
+  left: 363px;
+  top: 301px;
   font-family: "Josefin Slab";
   font-style: normal;
   font-weight: 650;
@@ -39,8 +39,8 @@ const HomePageBackground = styled.div`
   background-position: 65%;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
-  width: 100vw;
+  height: 982px;
+  width: 2512px;
   position: relative;
 `;
 

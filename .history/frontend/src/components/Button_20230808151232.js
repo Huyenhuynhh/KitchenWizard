@@ -24,10 +24,10 @@ const Button = styled.button`
   border: none;
 
   position: relative;
-  width: 150px;
-  height: 60px;
-  left: 46%;
-  top: 70%;
+  width: 210px;
+  height: 56px;
+  left: 652px;
+  top: 463px;
 
   background: #000000;
   border-radius: 3px;
@@ -35,8 +35,8 @@ const Button = styled.button`
   &:hover {
     color: #000000;
     background: #a19f9f;
-    left: 46%;
-    top: 70%;
+    left: 652px;
+    top: 463px;
   }
 `;
 

@@ -161,9 +161,9 @@ const SearchInput = styled.input`
 const SearchButton = styled.img`
   content: url(${image});
   width: 45px;
-  height: 45px;
+  height: 5px;
   position: relative;
-  margin-top: -45px;
+  margin-top: -40px;
   left: 54%;
   cursor: pointer;
 `;

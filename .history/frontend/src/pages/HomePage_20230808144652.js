@@ -9,8 +9,6 @@ const HomePageTitle = styled.h1`
   position: absolute;
   width: 100vw;
   height: 100vh;
-  left: 47%;
-  top: 79px;
   font-family: "Jost";
   font-style: normal;
   font-weight: 300;
@@ -23,8 +21,8 @@ const HomePageBody = styled.p`
   position: absolute;
   width: 788px;
   height: 125px;
-  left: 30%;
-  top: 55%;
+  left: 363px;
+  top: 301px;
   font-family: "Josefin Slab";
   font-style: normal;
   font-weight: 650;

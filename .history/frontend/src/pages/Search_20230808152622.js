@@ -163,7 +163,7 @@ const SearchButton = styled.img`
   width: 45px;
   height: 45px;
   position: relative;
-  margin-top: -45px;
+  margin-top: -43px;
   left: 54%;
   cursor: pointer;
 `;

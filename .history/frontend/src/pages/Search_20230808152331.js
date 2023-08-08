@@ -138,7 +138,7 @@ const SearchContainer = styled.div`
   top: -60vh;
   left: 50%;
   transform: translateX(-50%);
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -160,10 +160,10 @@ const SearchInput = styled.input`
 
 const SearchButton = styled.img`
   content: url(${image});
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   position: relative;
-  margin-top: -45px;
+  top: 20%;
   left: 54%;
   cursor: pointer;
 `;

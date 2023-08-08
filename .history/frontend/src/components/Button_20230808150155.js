@@ -10,7 +10,7 @@ const Button = styled.button`
   text-align: center;
   height: 100vh;
   width: 100vw;
-  left: %;
+  left: 70%;
   top: 45%;
   border-radius: 3px;
   padding: 10px 70px 10px 70px;
@@ -23,11 +23,11 @@ const Button = styled.button`
   gap: 10px;
   border: none;
 
-  position: relative;
-  width: 150px;
-  height: 60px;
-  left: 46%;
-  top: 70%;
+  position: absolute;
+  width: 210px;
+  height: 56px;
+  left: 652px;
+  top: 463px;
 
   background: #000000;
   border-radius: 3px;
@@ -35,8 +35,8 @@ const Button = styled.button`
   &:hover {
     color: #000000;
     background: #a19f9f;
-    left: 46%;
-    top: 70%;
+    left: 652px;
+    top: 463px;
   }
 `;
 

@@ -24,9 +24,9 @@ const Button = styled.button`
   border: none;
 
   position: relative;
-  width: 150px;
+  width: 30%;
   height: 60px;
-  left: 46%;
+  left: 37%;
   top: 70%;
 
   background: #000000;
@@ -35,8 +35,8 @@ const Button = styled.button`
   &:hover {
     color: #000000;
     background: #a19f9f;
-    left: 46%;
-    top: 70%;
+    left: 652px;
+    top: 463px;
   }
 `;
 
