@@ -111,7 +111,7 @@ const Slogan = styled.h1`
   text-align: center;
   font-weight: 600;
   font-family: "Josefin Slab";
-  margin-bottom: 580px;
+  margin-bottom: 700px;
   margin-left: 40px;
   wordwrap: "break-word";
 `;
@@ -136,6 +136,7 @@ const ResultsContainer = styled.div`
   align-items: flex-start;
   margin-top: -15px; 
   width: 100%;
+  background: #D7DBDD;
 `;
 
 const RecipeCardContainer = styled.div`
@@ -223,7 +224,7 @@ const Results = () => {
           <NavItem style={{ left: 360, top: 14 }}>Profile</NavItem>
           <NavItem
             style={{ left: 478, top: 13 }}
-            onClick={() => navigate("/savedrecipes")}
+            onClick={() => navigate("/testSavedRecipes")}
           >
             Saved
           </NavItem>

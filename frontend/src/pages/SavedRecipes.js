@@ -16,7 +16,7 @@ const SearchPage = styled.div`
 
 const Header = styled.div`
   width: 100%;
-  height: 80px;
+  height: 66px;
   position: absolute;
   top: 0;
   border-bottom: 2px solid white;
@@ -29,13 +29,11 @@ const Header = styled.div`
 `;
 
 const Logo = styled.img`
-  margin-top: 18px;
   width: 50px;
   height: 58px;
 `;
 
 const Title = styled.div`
-  margin-top: 20px;
   color: white;
   font-size: 30px;
   font-family: "Caesar Dressing";
@@ -48,8 +46,8 @@ const Navigation = styled.div`
   gap: 20px;
 `;
 
+// 'profile' and 'saved'
 const NavItem = styled.div`
-  margin-top: 15px;
   position: absolute;
   color: white;
   font-size: 25px;
@@ -76,7 +74,6 @@ const BackButton = styled.img`
 `;
 
 const LogoutButton = styled.div`
-  margin-top: 15px;
   display: inline-flex;
   padding: 10px 15px;
   justify-content: center;
@@ -98,6 +95,27 @@ const LogoutButton = styled.div`
   }
 `;
 
+const SloganContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 25%;
+  background: white;
+`;
+
+const Slogan = styled.h1`
+  color: black;
+  font-size: 40px;
+  position: relative;
+  text-align: center;
+  font-weight: 600;
+  font-family: "Josefin Slab";
+  height: 9%;
+  margin-left: 40px;
+  wordwrap: "break-word";
+`;
+
 const ResultsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -105,6 +123,7 @@ const ResultsContainer = styled.div`
   align-items: flex-start;
   margin-top: -15px;
   width: 100%;
+  background: #d7dbdd;
 `;
 
 const RecipeCardContainer = styled.div`
@@ -114,21 +133,26 @@ const RecipeCardContainer = styled.div`
 
 const SavedRecipes = () => {
   const navigate = useNavigate();
-  const [recipes, setRecipes] = useState([]); //initialize recipe with an empty array
-  const { userId } = useContext(UserContext); //get userId  
+  const [savedRecipes, setSavedRecipes] = useState([]);
+  const { userId } = useContext(UserContext);
 
-  useEffect (() => {
+  useEffect(() => {
     fetchSavedRecipes();
   }, []);
 
   const fetchSavedRecipes = async () => {
+    const token = localStorage.getItem('authToken');
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/users/${userId}/update_saved_recipes/`
+        `http://localhost:8000/api/users/${userId}/get_saved_recipes/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
-      setRecipes(response.data.saved_recipes);
+      console.log(response.data);
+      setSavedRecipes(response.data.saved_recipes);
     } catch (error) {
-      console.error("Something went wrong!", error);
+      console.error("Failed to fetch saved recipes:", error);
     }
   };
 
@@ -136,7 +160,7 @@ const SavedRecipes = () => {
     // remove user data from local storage
     localStorage.removeItem("userData");
 
-    window.location.href = "/";
+    navigate('/');
 
     console.log("User logged out");
   };
@@ -148,13 +172,22 @@ const SavedRecipes = () => {
         <Title>Kitchen Wizard</Title>
         <Navigation>
           <NavItem style={{ left: 360, top: 14 }}>Profile</NavItem>
+          <NavItem
+            style={{ left: 478, top: 13 }}
+            onClick={() => navigate("/savedrecipes")}
+          >
+            Saved
+          </NavItem>
           <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
           <BackButton onClick={(backButtonImage) => navigate(-1)} />
         </Navigation>
       </Header>
+      <SloganContainer>
+        <Slogan>Unlock Flavorful Creations from Your Pantry!</Slogan>
+      </SloganContainer>
       <ResultsContainer>
-        {recipes &&
-          recipes.map((recipe) => (
+        {savedRecipes &&
+          savedRecipes.map((recipe) => (
             <RecipeCardContainer key={recipe.id}>
               <RecipeCardComponent recipe={recipe} />
             </RecipeCardContainer>

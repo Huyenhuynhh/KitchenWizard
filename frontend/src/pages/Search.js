@@ -189,6 +189,10 @@ const Search = () => {
     }
   };
 
+  const handleSavedClick = async (event) => {
+    navigate("/testSavedRecipes");
+  }
+
   const handleLogoutClick = async (event) => {
     // remove user data from local storage
     localStorage.removeItem("userData");
@@ -205,7 +209,7 @@ const Search = () => {
         <Title>Kitchen Wizard</Title>
         <Navigation>
           <NavItem style={{ left: 360, top: 14 }}>Profile</NavItem>
-          <NavItem style={{ left: 478, top: 13 }}>Saved</NavItem>
+          <NavItem onClick={handleSavedClick} style={{ left: 478, top: 13 }}>Saved</NavItem>
           <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
         </Navigation>
       </Header>

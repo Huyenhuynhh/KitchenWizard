@@ -84,14 +84,15 @@ const ScrollableDiv = styled.div`
 `;
 
 const RecipeCardComponent = ({ recipe }) => {
+  console.log(recipe);
+
   const usedIngredients = recipe.usedIngredients
     ? recipe.usedIngredients.map((ingredient) => ingredient.original).join(", ")
     : "No used ingredients provided";
 
   const missedIngredients = recipe.missedIngredients
     ? recipe.missedIngredients
-        .map((ingredient) => ingredient.original)
-        .join(", ")
+        .map((ingredient) => ingredient.original).join(", ")
     : "No missed ingredients provided";
 
   const { savedRecipes, saveRecipe, removeRecipe } = useContext(GlobalContext);
@@ -120,6 +121,7 @@ const RecipeCardComponent = ({ recipe }) => {
       let url = `http://localhost:8000/api/users/${userId}/update_saved_recipes/`;
       console.log(url);
       console.log("User ID: ", userId);
+      console.log("Recipe ID: ", recipe.id); // log the recipe id that being sent 
 
       // token is stored in localStorage 
       const token = localStorage.getItem("authToken");

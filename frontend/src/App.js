@@ -9,6 +9,7 @@ import Results from "./pages/Results";
 import { GlobalProvider } from "./contexts/GlobalContext"; 
 import { UserProvider } from "./contexts/UserContext";
 import SavedRecipes from "./pages/SavedRecipes";
+import TestSavedRecipes from "./pages/TestSavedRecipes";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
               <Route path="/search" element={<SearchPage />} />
               <Route path="/results" element={<Results />} />
               <Route path="/savedrecipes" element={<SavedRecipes />} />
+              <Route path="/testSavedRecipes" element={<TestSavedRecipes />} />
             </Routes>
           </div>
         </Router>

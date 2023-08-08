@@ -87,10 +87,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'ENFORCE_SCHEMA': False,
-        'NAME': 'Cluster0',
+        'NAME': 'Cluster0', 
         'CLIENT': {
-            'host': 'mongodb+srv://huynhh4:Helloworld1234@cluster0.h5dzydt.mongodb.net/',
-            'username': 'huynhh4',
+            'host': 'mongodb+srv://huyen:Helloworld1234@cluster0.g547gc1.mongodb.net/',
+            'username': 'huyen',
             'password': 'Helloworld1234',
             'authMechanism': 'SCRAM-SHA-1',
             'tlsCAFile': certifi.where(),
@@ -150,3 +150,5 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }
+
+AUTH_USER_MODEL = 'api.User'
