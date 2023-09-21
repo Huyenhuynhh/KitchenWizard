@@ -2,10 +2,10 @@
 A web application that is designed to make meal preparation easier and more exciting. It allows users to input ingredients they have on hand, and, like a culinary crystal ball, the application presents a range of delicious recipes they can create with those ingredients.
 
 ## Technical Stacks:
-Backend: Python and Django
-Frontend: React.js
-Database: MongoDB
-Other: Spoonacular API, Docker for containerization, AWS for deployment
+###Backend: Python and Django
+###Frontend: React.js
+###Database: MongoDB
+###Other: Spoonacular API, Docker for containerization, AWS for deployment
 
 ## Key Features:
 **User Authentication:** Users can create their own account to save their favorite recipes, rate them, and leave comments.
@@ -22,3 +22,40 @@ Other: Spoonacular API, Docker for containerization, AWS for deployment
 
 ## Prototype 
 ![Screenshot](Prototype.png)
+
+## Setup and Installation
+```
+1. Clone the repository:
+git clone https://github.com/Huyenhuynhh/KitchenWizard.git
+2. Navigate to the project directory:
+cd KitchenWizard
+3. Install dependencies:
+npm install
+4. Start the server:
+npm start
+(you can use **yarn** if **npm** is not working for you)
+5. The application should now be running at `http://localhost:3000`.
+Note: you need to a virtual environment to run the program.
+```
+
+## Usage
+
+1. On the home page, click the login button to sign in to your account or create one if you don't have one.
+2. Input your available ingredients and click the "Search" icon.
+3. Browse through the list of potential recipes.
+4. Click on a recipe to view more details, or save it for later viewing.
+
+[Provide more detailed usage guidelines if needed]
+
+## Contributing
+
+We welcome contributions from the community! If you'd like to contribute:
+
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes and commit them.
+4. Open a pull request.
+
+
+
+
