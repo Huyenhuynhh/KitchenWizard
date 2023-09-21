@@ -2,10 +2,10 @@
 A web application that is designed to make meal preparation easier and more exciting. It allows users to input ingredients they have on hand, and, like a culinary crystal ball, the application presents a range of delicious recipes they can create with those ingredients.
 
 ## Technical Stacks:
-###Backend: Python and Django
-###Frontend: React.js
-###Database: MongoDB
-###Other: Spoonacular API, Docker for containerization, AWS for deployment
+1. Backend: Python and Django
+2. Frontend: React.js
+3. Database: MongoDB
+4. Other: Spoonacular API
 
 ## Key Features:
 **User Authentication:** Users can create their own account to save their favorite recipes, rate them, and leave comments.
