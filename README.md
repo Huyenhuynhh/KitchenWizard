@@ -45,16 +45,6 @@ Note: you need to a virtual environment to run the program.
 3. Browse through the list of potential recipes.
 4. Click on a recipe to view more details, or save it for later viewing.
 
-[Provide more detailed usage guidelines if needed]
-
-## Contributing
-
-We welcome contributions from the community! If you'd like to contribute:
-
-1. Fork the repository.
-2. Create a new branch.
-3. Make your changes and commit them.
-4. Open a pull request.
 
 
 
